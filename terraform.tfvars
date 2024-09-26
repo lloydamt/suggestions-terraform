@@ -1,0 +1,1 @@
+fe-bucket_policy = "fe-bucket-public_read_policy"
