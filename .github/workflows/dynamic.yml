@@ -2,11 +2,11 @@ name: Workflow to deploy DE
 
 on:
   repository_dispatch:
-    types: [dispatch-event]
+    types: [deploy-de]
 
 jobs:
   log:
     runs-on: ubuntu-latest
     steps:
       - name: event received
-        run: echo "Event received"
+        run: echo "${{ github.event.client_payload.branch_name }}"
