@@ -2,7 +2,7 @@ name: Workflow to deploy DE
 
 on:
   repository_dispatch:
-    types: [dispatch-event]
+    types: [deploy-de]
 
 jobs:
   log:
