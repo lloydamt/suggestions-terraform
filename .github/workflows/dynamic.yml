@@ -8,11 +8,13 @@ jobs:
   log:
     runs-on: ubuntu-latest
     steps:
-      # - name: event received
-      #   run: echo "${{ github.event.client_payload.branch_name }}"
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Checkout and clone branch
+        run: |
+          git checkout -b ${{ github.event.client_payload.branch_name }}
+          git clone -b ${{ github.event.client_payload.branch_name }} ${{ secrets.FE_REPO }}
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
@@ -21,18 +23,12 @@ jobs:
           github-token: ${{ secrets.REPOSITORY_ACCESS_TOKEN }}
           repository: lloydamt/suggestions-frontend
           run-id: ${{ github.event.client_payload.run_id }}
-      - run: ls -l
-      - name: Checkout and clone branch
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+      - name: Run Terraform
         run: |
-          git checkout -b ${{ github.event.client_payload.branch_name }}
-          git clone -b ${{ github.event.client_payload.branch_name }} ${{ secrets.FE_REPO }}
-          ls
-      # - name: Set up Terraform
-      #   uses: hashicorp/setup-terraform@v3
-      #   with:
-      #     cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-      # - name: Run Terraform
-      #   run: |
-      #     terraform init
-      #     terraform validate
-      #     terraform apply -lock=false -var="bucket_name=${{ github.run_id }}" -var="access_key=${{ secrets.AWS_ACCESS_KEY_ID }}" -var="secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" --auto-approve
+          terraform init
+          terraform validate
+          terraform apply -lock=false -var="bucket_name=${{ github.run_id }}" -var="access_key=${{ secrets.AWS_ACCESS_KEY_ID }}" -var="secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" --auto-approve
