@@ -17,7 +17,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: dist
-          path: dist/
+          path: dist/*
           github-token: ${{ secrets.REPOSITORY_ACCESS_TOKEN }}
           repository: lloydamt/suggestions-frontend
           run-id: ${{ github.event.client_payload.run_id }}
