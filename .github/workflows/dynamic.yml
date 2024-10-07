@@ -32,4 +32,4 @@ jobs:
         run: |
           terraform init
           terraform validate
-          terraform apply -lock=false -var="bucket_name=${{ github.run_id }}" -var="access_key=${{ secrets.AWS_ACCESS_KEY_ID }}" -var="secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" --auto-approve
+          terraform apply -lock=false -var="bucket_name=${{ github.event.client_payload.branch_name }}" -var="access_key=${{ secrets.AWS_ACCESS_KEY_ID }}" -var="secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" --auto-approve

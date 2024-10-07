@@ -16,4 +16,4 @@ jobs:
       - name: Terraform destroy
         run: |
           terraform init
-          terraform destroy -lock=false -var="bucket_name=${{ github.run_id }}" -var="access_key=${{ secrets.AWS_ACCESS_KEY_ID }}" -var="secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" --auto-approve
+          terraform destroy -lock=false -var="bucket_name=${{ github.event.client_payload.branch_name }}" -var="access_key=${{ secrets.AWS_ACCESS_KEY_ID }}" -var="secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" --auto-approve
