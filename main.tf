@@ -73,7 +73,7 @@ resource "aws_s3_bucket_acl" "fe-bucket-public-acl" {
 resource "aws_s3_object" "index" {
   bucket = aws_s3_bucket.frontend-bucket.bucket
   key    = "index.html"
-  source = "./dist/index.html"
+  source = "dist/index.html"
   content_type = "text/html"
   depends_on = [ aws_s3_bucket_public_access_block.fe-bucket-public_access_block ]
 }
@@ -82,27 +82,27 @@ resource "aws_s3_object" "index" {
 resource "aws_s3_object" "favicon" {
   bucket = aws_s3_bucket.frontend-bucket.bucket
   key    = "favicon.ico"
-  source = "./dist/favicon.ico"
+  source = "dist/favicon.ico"
   depends_on = [ aws_s3_bucket_public_access_block.fe-bucket-public_access_block ]
 }
 
 # Upload all files from the css directory
 resource "aws_s3_object" "css_files" {
-  for_each = fileset("./dist/css", "**")
+  for_each = fileset("dist/css", "**")
   bucket = aws_s3_bucket.frontend-bucket.bucket
   key    = "css/${each.value}"
-  source = "./dist/css/${each.value}"
+  source = "dist/css/${each.value}"
   content_type = "text/css"
   depends_on = [ aws_s3_bucket_public_access_block.fe-bucket-public_access_block ]
 }
 
 # # Upload all files from the js directory
 resource "aws_s3_object" "js_files" {
-  for_each = fileset("./dist/js", "**")
+  for_each = fileset("dist/js", "**")
 
   bucket = aws_s3_bucket.frontend-bucket.bucket
   key    = "js/${each.value}"
-  source = "./dist/js/${each.value}"
+  source = "dist/js/${each.value}"
   content_type = "application/javascript"
   depends_on = [ aws_s3_bucket_public_access_block.fe-bucket-public_access_block ]
 }
