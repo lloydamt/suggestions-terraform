@@ -1,6 +1,7 @@
 name: Workflow to deploy DE
 
 on:
+  workflow_dispatch:
   repository_dispatch:
     types: [deploy-de]
 
