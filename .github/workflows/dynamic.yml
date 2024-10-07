@@ -24,14 +24,6 @@ jobs:
           npm i
           npm run build
           mv dist ../dist
-      # - name: Download artifact
-      #   uses: actions/download-artifact@v4
-      #   with:
-      #     name: dist
-      #     path: dist/*
-      #     github-token: ${{ secrets.REPOSITORY_ACCESS_TOKEN }}
-      #     repository: lloydamt/suggestions-frontend
-      #     run-id: ${{ github.event.client_payload.run_id }}
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
         with:
