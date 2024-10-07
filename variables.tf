@@ -1,8 +1,3 @@
-variable "domain_name" {
-  type        = string
-  description = "Name of domain"
-}
-
 variable "bucket_name" {
   type        = string
   description = "Name of bucket"
