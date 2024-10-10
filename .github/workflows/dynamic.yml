@@ -30,7 +30,8 @@ jobs:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
       - name: Run Terraform
         run: |
-          branch=$(echo "${{ github.event.client_payload.branch_name }}" | sed 's#/#_#')
+          branch=$(echo "${{ github.event.client_payload.branch_name }}" | sed 's#/#-#')
+          echo $branch
           terraform init
           terraform validate
           terraform apply -lock=false -var="bucket_name=$branch" -var="access_key=${{ secrets.AWS_ACCESS_KEY_ID }}" -var="secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" --auto-approve
