@@ -116,5 +116,5 @@ resource "aws_s3_bucket_website_configuration" "website-config" {
 }
 
 output "website_url" {
-    value = aws_s3_bucket.frontend-bucket.website_endpoint
+    value = aws_s3_bucket_website_configuration.website-config.website_endpoint
 }
